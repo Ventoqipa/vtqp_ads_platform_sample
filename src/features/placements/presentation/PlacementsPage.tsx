@@ -1,0 +1,2 @@
+import { PageHeader } from '../../../shared/components/PageHeader';
+export function PlacementsPage(){return <><PageHeader eyebrow="Inventory" title="Placements" description="Represent the places where an application could request advertising."/><section className="placeholder-card"><h3>Mock placements</h3><p>Model and display placements without adding a backend or real advertising SDK.</p></section></>}
