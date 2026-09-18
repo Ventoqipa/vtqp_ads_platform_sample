@@ -1,0 +1,2 @@
+import { PageHeader } from '../../../shared/components/PageHeader';
+export function DashboardPage(){return <><PageHeader eyebrow="Overview" title="Dashboard" description="Implement the required mock metrics without coupling the page to provider-specific data."/><section className="placeholder-card"><h3>Your challenge starts here</h3><p>Add Requests, Impressions, Clicks and Failures using the documented architecture.</p></section></>}
