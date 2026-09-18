@@ -1,0 +1,2 @@
+import { PageHeader } from '../../../shared/components/PageHeader';
+export function ProvidersPage(){return <><PageHeader eyebrow="Configuration" title="Providers" description="Implement provider discovery and selection using mock implementations."/><section className="placeholder-card"><h3>Provider boundary</h3><p>The starter intentionally does not define the final Adapter or Strategy implementation.</p></section></>}
