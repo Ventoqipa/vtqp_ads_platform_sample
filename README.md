@@ -1,0 +1,1 @@
+# vtqp_ads_platform_sample
