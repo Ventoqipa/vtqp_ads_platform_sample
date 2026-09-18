@@ -1,0 +1,3 @@
+import { NavLink, Outlet } from 'react-router-dom';
+const navigation=[{to:'/',label:'Dashboard',end:true},{to:'/providers',label:'Providers',end:false},{to:'/placements',label:'Placements',end:false},{to:'/events',label:'Events',end:false}];
+export function AppShell(){return <div className="app-shell"><aside className="sidebar"><div><p className="eyebrow">VTQP Technical Lab</p><h1>Ads Platform</h1></div><nav aria-label="Primary navigation">{navigation.map(item=><NavLink key={item.to} to={item.to} end={item.end} className={({isActive})=>isActive?'nav-link active':'nav-link'}>{item.label}</NavLink>)}</nav><p className="sidebar-note">Architecture-first starter. Mock data only.</p></aside><main className="content"><Outlet/></main></div>}
