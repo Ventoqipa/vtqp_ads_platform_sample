@@ -16,6 +16,16 @@ const mockPlacements: PlacementMock[] = [
 ];
 
 export function PlacementsPage() {
+  const handleLoadAd = (placementId: string) => {
+    console.log(`[UI Event Trigger] Load Ad requested for placement: ${placementId}`);
+    // Ready to integrate: activeStrategy.loadAd(placementId)
+  };
+
+  const handleShowAd = (placementId: string) => {
+    console.log(`[UI Event Trigger] Show Ad requested for placement: ${placementId}`);
+    // Ready to integrate: activeStrategy.showAd(placementId)
+  };
+
   return (
     <div className="placements-page">
       <PageHeader
@@ -24,28 +34,61 @@ export function PlacementsPage() {
         description="Represent the places where an application could request advertising."
       />
 
-      <div className="card" style={{ marginTop: '1.5rem', overflowX: 'auto' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+      <div className="placements-table-container">
+        <table className="placements-table">
           <thead>
-            <tr style={{ borderBottom: '1px solid var(--border-color, #e5e7eb)' }}>
-              <th style={{ padding: '0.75rem 1rem' }}>ID</th>
-              <th style={{ padding: '0.75rem 1rem' }}>Name</th>
-              <th style={{ padding: '0.75rem 1rem' }}>Provider</th>
-              <th style={{ padding: '0.75rem 1rem' }}>Format</th>
-              <th style={{ padding: '0.75rem 1rem' }}>Status</th>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Provider</th>
+              <th>Format</th>
+              <th>Status</th>
+              <th style={{ textAlign: 'right' }}>Actions</th>
             </tr>
           </thead>
           <tbody>
             {mockPlacements.map((placement) => (
-              <tr key={placement.id} style={{ borderBottom: '1px solid var(--border-color, #f3f4f6)' }}>
-                <td style={{ padding: '0.75rem 1rem', fontFamily: 'monospace' }}>{placement.id}</td>
-                <td style={{ padding: '0.75rem 1rem', fontWeight: 500 }}>{placement.name}</td>
-                <td style={{ padding: '0.75rem 1rem' }}>{placement.provider}</td>
-                <td style={{ padding: '0.75rem 1rem' }}>{placement.format}</td>
-                <td style={{ padding: '0.75rem 1rem' }}>
+              <tr key={placement.id}>
+                <td className="placement-id">{placement.id}</td>
+                <td style={{ fontWeight: 500 }}>{placement.name}</td>
+                <td>{placement.provider}</td>
+                <td>{placement.format}</td>
+                <td>
                   <span className={`badge ${placement.status === 'Active' ? 'connected' : 'disconnected'}`}>
                     {placement.status}
                   </span>
+                </td>
+                <td style={{ textAlign: 'right' }}>
+                  <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
+                    <button
+                      type="button"
+                      className="btn-secondary"
+                      onClick={() => handleLoadAd(placement.id)}
+                      disabled={placement.status === 'Paused'}
+                      style={{
+                        padding: '0.25rem 0.5rem',
+                        fontSize: '0.8rem',
+                        cursor: placement.status === 'Paused' ? 'not-allowed' : 'pointer',
+                        opacity: placement.status === 'Paused' ? 0.5 : 1
+                      }}
+                    >
+                      Load Ad
+                    </button>
+                    <button
+                      type="button"
+                      className="btn-primary"
+                      onClick={() => handleShowAd(placement.id)}
+                      disabled={placement.status === 'Paused'}
+                      style={{
+                        padding: '0.25rem 0.5rem',
+                        fontSize: '0.8rem',
+                        cursor: placement.status === 'Paused' ? 'not-allowed' : 'pointer',
+                        opacity: placement.status === 'Paused' ? 0.5 : 1
+                      }}
+                    >
+                      Show Ad
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
