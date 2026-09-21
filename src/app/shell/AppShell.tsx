@@ -1,3 +1,34 @@
-import { NavLink, Outlet } from 'react-router-dom';
-const navigation=[{to:'/',label:'Dashboard',end:true},{to:'/providers',label:'Providers',end:false},{to:'/placements',label:'Placements',end:false},{to:'/events',label:'Events',end:false}];
-export function AppShell(){return <div className="app-shell"><aside className="sidebar"><div><p className="eyebrow">VTQP Technical Lab</p><h1>Ads Platform</h1></div><nav aria-label="Primary navigation">{navigation.map(item=><NavLink key={item.to} to={item.to} end={item.end} className={({isActive})=>isActive?'nav-link active':'nav-link'}>{item.label}</NavLink>)}</nav><p className="sidebar-note">Architecture-first starter. Mock data only.</p></aside><main className="content"><Outlet/></main></div>}
+import { NavLink, Outlet } from "react-router-dom";
+
+export function AppShell() {
+  return (
+    <div className="app-container">
+      {/* Sidebar Navigation */}
+      <aside className="sidebar">
+        <div className="brand">
+          <h2>VTQP</h2>
+          <span>Ads Platform</span>
+        </div>
+        <nav className="nav-menu">
+          <NavLink to="/" end className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
+            Dashboard
+          </NavLink>
+          <NavLink to="/providers" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
+            Providers
+          </NavLink>
+          <NavLink to="/placements" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
+            Placements
+          </NavLink>
+          <NavLink to="/events" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
+            Events
+          </NavLink>
+        </nav>
+      </aside>
+
+      {/* Main Content Area */}
+      <main className="main-content">
+        <Outlet />
+      </main>
+    </div>
+  );
+}
