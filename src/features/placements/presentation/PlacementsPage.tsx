@@ -16,6 +16,16 @@ const mockPlacements: PlacementMock[] = [
 ];
 
 export function PlacementsPage() {
+  const handleLoadAd = (placementId: string) => {
+    console.log(`[UI Event Trigger] Load Ad requested for placement: ${placementId}`);
+    // Ready to integrate: activeStrategy.loadAd(placementId)
+  };
+
+  const handleShowAd = (placementId: string) => {
+    console.log(`[UI Event Trigger] Show Ad requested for placement: ${placementId}`);
+    // Ready to integrate: activeStrategy.showAd(placementId)
+  };
+
   return (
     <div className="placements-page">
       <PageHeader
@@ -33,6 +43,7 @@ export function PlacementsPage() {
               <th>Provider</th>
               <th>Format</th>
               <th>Status</th>
+              <th style={{ textAlign: 'right' }}>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -46,6 +57,38 @@ export function PlacementsPage() {
                   <span className={`badge ${placement.status === 'Active' ? 'connected' : 'disconnected'}`}>
                     {placement.status}
                   </span>
+                </td>
+                <td style={{ textAlign: 'right' }}>
+                  <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
+                    <button
+                      type="button"
+                      className="btn-secondary"
+                      onClick={() => handleLoadAd(placement.id)}
+                      disabled={placement.status === 'Paused'}
+                      style={{
+                        padding: '0.25rem 0.5rem',
+                        fontSize: '0.8rem',
+                        cursor: placement.status === 'Paused' ? 'not-allowed' : 'pointer',
+                        opacity: placement.status === 'Paused' ? 0.5 : 1
+                      }}
+                    >
+                      Load Ad
+                    </button>
+                    <button
+                      type="button"
+                      className="btn-primary"
+                      onClick={() => handleShowAd(placement.id)}
+                      disabled={placement.status === 'Paused'}
+                      style={{
+                        padding: '0.25rem 0.5rem',
+                        fontSize: '0.8rem',
+                        cursor: placement.status === 'Paused' ? 'not-allowed' : 'pointer',
+                        opacity: placement.status === 'Paused' ? 0.5 : 1
+                      }}
+                    >
+                      Show Ad
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
