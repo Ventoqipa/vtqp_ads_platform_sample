@@ -3,7 +3,13 @@ import { AdsProvider, AdEvent, Placement, Metrics } from '../domain/types';
 export class MetaAudienceNetworkAdapter implements AdsProvider {
   id = 'meta' as const;
   name = 'Meta Audience Network';
+  isConnected = true;
+  
   private eventCallback?: (event: AdEvent) => void;
+
+  async initialize(): Promise<void> {
+    // Simulación de inicialización
+  }
 
   onEvent(callback: (event: AdEvent) => void): void {
     this.eventCallback = callback;
@@ -38,7 +44,6 @@ export class MetaAudienceNetworkAdapter implements AdsProvider {
       requests: 0,
       impressions: 0,
       clicks: 0,
-      fillRate: 0,
       failures: 0,
     };
   }

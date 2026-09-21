@@ -1,49 +1,40 @@
-import { useState } from 'react';
-import { PageHeader } from '../../../shared/components/PageHeader';
-import { ProviderId } from '../../ads/domain/types';
+import { PageHeader } from "../../../shared/components/PageHeader";
+import { useAdsContext } from '../../ads/context/useAdsContext';
+import { ProviderId } from "../../ads/domain/types";
 
-interface MockProviderUI {
+interface ProviderUI {
   id: ProviderId;
   name: string;
   description: string;
-  isConnected: boolean;
 }
 
-const initialProviders: MockProviderUI[] = [
+const availableProviders: ProviderUI[] = [
   {
     id: "admob",
     name: "Google AdMob (Mock)",
     description: "Mock implementation of Google AdMob provider.",
-    isConnected: true,
   },
   {
     id: "meta",
     name: "Meta Audience Network (Mock)",
     description: "Mock implementation of Meta Audience Network provider.",
-    isConnected: false,
   },
 ];
 
 export function ProvidersPage() {
-  const [activeProviderId, setActiveProviderId] = useState<ProviderId>("admob");
-
-  const handleSelectProvider = (providerId: ProviderId) => {
-    setActiveProviderId(providerId);
-    console.log(`[UI Strategy Switch] Active provider changed to: ${providerId}`);
-    // Ready to integrate: strategyContext.setActiveProvider(providerId)
-  };
+  const { activeProvider, selectProvider } = useAdsContext();
 
   return (
     <div className="providers-page">
       <PageHeader
-        eyebrow="Providers"
+        eyebrow="PROVIDERS"
         title="Ad Providers"
         description="Manage connected ad networks and their active strategy."
       />
 
       <div className="providers-grid">
-        {initialProviders.map((provider) => {
-          const isActive = provider.id === activeProviderId;
+        {availableProviders.map((provider) => {
+          const isConnected = activeProvider?.id === provider.id;
 
           return (
             <div key={provider.id} className="provider-card">
@@ -52,29 +43,34 @@ export function ProvidersPage() {
                   <h3 className="provider-title">{provider.name}</h3>
                   <span
                     className={`badge ${
-                      provider.isConnected ? "connected" : "disconnected"
+                      isConnected ? "connected" : "disconnected"
                     }`}
                   >
-                    {provider.isConnected ? "Connected" : "Not connected"}
+                    {isConnected ? "Connected" : "Not connected"}
                   </span>
                 </div>
-                <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", marginTop: "0.5rem" }}>
+                <p
+                  style={{
+                    color: "var(--text-secondary)",
+                    fontSize: "0.9rem",
+                    marginTop: "0.5rem",
+                  }}
+                >
                   {provider.description}
                 </p>
               </div>
 
-              <div className="provider-actions">
+              <div className="provider-actions" style={{ marginTop: "1.5rem" }}>
                 <button
-                  type="button"
                   className="btn-primary"
-                  onClick={() => handleSelectProvider(provider.id)}
-                  disabled={isActive}
+                  onClick={() => selectProvider(provider.id)}
+                  disabled={isConnected}
                   style={{
-                    opacity: isActive ? 0.6 : 1,
-                    cursor: isActive ? 'not-allowed' : 'pointer',
+                    opacity: isConnected ? 0.7 : 1,
+                    cursor: isConnected ? "default" : "pointer",
                   }}
                 >
-                  {isActive ? "Active Strategy" : "Select Provider"}
+                  {isConnected ? "Active Strategy" : "Select Provider"}
                 </button>
               </div>
             </div>

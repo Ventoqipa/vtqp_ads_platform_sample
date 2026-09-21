@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { PageHeader } from '../../../shared/components/PageHeader';
-import { mockEvents } from '../../ads/mocks/mockEvents';
+import { useAdsContext } from '../../ads/context/useAdsContext';
 
 export function EventsPage() {
+  const { events } = useAdsContext();
   const [filter, setFilter] = useState('ALL');
 
   const filteredEvents =
     filter === 'ALL'
-      ? mockEvents
-      : mockEvents.filter((evt) => evt.type === filter);
+      ? events
+      : events.filter((evt) => evt.type.toUpperCase() === filter);
 
   const getEventBadgeClass = (type: string) => {
     switch (type.toUpperCase()) {
@@ -63,19 +64,27 @@ export function EventsPage() {
             </tr>
           </thead>
           <tbody>
-            {filteredEvents.map((evt) => (
-              <tr key={evt.id}>
-                <td className="time-cell">{evt.timestamp}</td>
-                <td>
-                  <span className={getEventBadgeClass(evt.type)}>
-                    ● {evt.type.charAt(0) + evt.type.slice(1).toLowerCase()}
-                  </span>
+            {filteredEvents.length === 0 ? (
+              <tr>
+                <td colSpan={5} style={{ textAlign: 'center', color: '#6b7280', padding: '2rem' }}>
+                  No events found for this filter.
                 </td>
-                <td className="provider-cell">{evt.providerId}</td>
-                <td className="placement-cell">{evt.placementId}</td>
-                <td className="details-cell">{evt.details || '-'}</td>
               </tr>
-            ))}
+            ) : (
+              filteredEvents.map((evt) => (
+                <tr key={evt.id}>
+                  <td className="time-cell">{evt.timestamp}</td>
+                  <td>
+                    <span className={getEventBadgeClass(evt.type)}>
+                      ● {evt.type.charAt(0) + evt.type.slice(1).toLowerCase()}
+                    </span>
+                  </td>
+                  <td className="provider-cell">{evt.providerId}</td>
+                  <td className="placement-cell">{evt.placementId}</td>
+                  <td className="details-cell">{evt.details || '-'}</td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
