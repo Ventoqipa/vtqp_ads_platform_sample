@@ -82,3 +82,64 @@ npm run build
 ## Expected final delivery
 
 A Pull Request containing the four functional areas, mock metrics/data, provider selection, placements, lifecycle events, a common provider abstraction, at least two mock provider implementations, Adapter + Strategy, basic tests and updated documentation. All checks must pass.
+
+# VTQP Ads Platform
+
+An ad platform dashboard built with React, TypeScript, and Vite designed to simulate ad management, provider integration, strategy selection, and real-time event tracking.
+
+## 🚀 Features
+
+- **Dynamic Navigation Shell:** Responsive sidebar and layout with accessible semantic HTML and ARIA labels.
+- **Provider Management:** Toggle between advertising providers (Google AdMob, Meta Audience Network) with live status updates.
+- **Ad Placement Simulation:** Interactive trigger controls to simulate Ad Requests, Impressions, Clicks, and Failures across different ad placements.
+- **Real-Time Analytics & Logs:** Live Dashboard displaying dynamic metrics (Requests, Impressions, Clicks, Fill Rate) and chronological event logging.
+- **Decoupled Architecture:** Built on top of a centralized `AdsContext` and custom hooks (`useAds`) using Strategy and Adapter patterns for ad domain logic.
+
+## 🛠️ Getting Started
+
+### Prerequisites
+
+- Node.js (v18 or higher recommended)
+- npm
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd vtqp_ads_platform_sample
+
+2. Install Dependencies
+```bash
+npm install
+```
+
+3. Start the Development Server
+```bash
+npm run dev
+```
+
+4. Open in Browser
+
+Open your browser at `http://localhost:5173`.
+
+## 🧪 Available Scripts
+
+- `npm run dev` - Starts the Vite development server.
+- `npm run build` - Builds the application for production.
+- `npm run lint` - Runs ESLint to check for code quality and style issues.
+- `npm run test` - Executes the unit test suite.
+
+## 🏗️ Project Structure
+
+```
+src/
+├── ads/                 # Core domain interfaces, adapters, strategies & context
+├── app/                 # Application shell, layout, and router configuration
+├── features/            # Feature-based presentation modules (Dashboard, Providers, Placements, Events)
+└── shared/               # Reusable UI components and global styles
+```
+
+## 🛡️ License
+
+This project is part of the VTQP Ads Platform challenge.
