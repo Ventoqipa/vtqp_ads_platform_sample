@@ -24,25 +24,25 @@ export function PlacementsPage() {
         description="Represent the places where an application could request advertising."
       />
 
-      <div className="card" style={{ marginTop: '1.5rem', overflowX: 'auto' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+      <div className="placements-table-container">
+        <table className="placements-table">
           <thead>
-            <tr style={{ borderBottom: '1px solid var(--border-color, #e5e7eb)' }}>
-              <th style={{ padding: '0.75rem 1rem' }}>ID</th>
-              <th style={{ padding: '0.75rem 1rem' }}>Name</th>
-              <th style={{ padding: '0.75rem 1rem' }}>Provider</th>
-              <th style={{ padding: '0.75rem 1rem' }}>Format</th>
-              <th style={{ padding: '0.75rem 1rem' }}>Status</th>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Provider</th>
+              <th>Format</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
             {mockPlacements.map((placement) => (
-              <tr key={placement.id} style={{ borderBottom: '1px solid var(--border-color, #f3f4f6)' }}>
-                <td style={{ padding: '0.75rem 1rem', fontFamily: 'monospace' }}>{placement.id}</td>
-                <td style={{ padding: '0.75rem 1rem', fontWeight: 500 }}>{placement.name}</td>
-                <td style={{ padding: '0.75rem 1rem' }}>{placement.provider}</td>
-                <td style={{ padding: '0.75rem 1rem' }}>{placement.format}</td>
-                <td style={{ padding: '0.75rem 1rem' }}>
+              <tr key={placement.id}>
+                <td className="placement-id">{placement.id}</td>
+                <td style={{ fontWeight: 500 }}>{placement.name}</td>
+                <td>{placement.provider}</td>
+                <td>{placement.format}</td>
+                <td>
                   <span className={`badge ${placement.status === 'Active' ? 'connected' : 'disconnected'}`}>
                     {placement.status}
                   </span>

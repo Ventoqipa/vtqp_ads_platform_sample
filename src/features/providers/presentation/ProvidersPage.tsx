@@ -1,5 +1,5 @@
 import { PageHeader } from '../../../shared/components/PageHeader';
-import { ProviderId } from '../../../ads/domain/types';
+import { ProviderId } from '../../ads/domain/types';
 
 interface MockProviderUI {
   id: ProviderId;
