@@ -1,41 +1,25 @@
-import { PageHeader } from '../../../shared/components/PageHeader';
+import { PageHeader } from "../../../shared/components/PageHeader";
+import { useAdsContext } from '../../ads/context/useAdsContext';
 
-interface PlacementMock {
-  id: string;
-  name: string;
-  provider: string;
-  format: string;
-  status: 'Active' | 'Paused';
-}
-
-const mockPlacements: PlacementMock[] = [
-  { id: 'home_banner', name: 'Home Banner', provider: 'Google AdMob', format: 'Banner', status: 'Active' },
-  { id: 'workout_interstitial', name: 'Workout Interstitial', provider: 'Meta Audience Network', format: 'Interstitial', status: 'Active' },
-  { id: 'profile_rewarded', name: 'Profile Rewarded', provider: 'Google AdMob', format: 'Rewarded', status: 'Paused' },
-  { id: 'settings_banner', name: 'Settings Banner', provider: 'Meta Audience Network', format: 'Banner', status: 'Active' },
-];
+const PROVIDER_NAMES: Record<string, string> = {
+  admob: "Google AdMob",
+  meta: "Meta Audience Network",
+  custom_provider: "Custom Provider",
+};
 
 export function PlacementsPage() {
-  const handleLoadAd = (placementId: string) => {
-    console.log(`[UI Event Trigger] Load Ad requested for placement: ${placementId}`);
-    // Ready to integrate: activeStrategy.loadAd(placementId)
-  };
-
-  const handleShowAd = (placementId: string) => {
-    console.log(`[UI Event Trigger] Show Ad requested for placement: ${placementId}`);
-    // Ready to integrate: activeStrategy.showAd(placementId)
-  };
+  const { placements, loadAd, showAd } = useAdsContext();
 
   return (
     <div className="placements-page">
       <PageHeader
-        eyebrow="Inventory"
+        eyebrow="INVENTORY"
         title="Placements"
         description="Represent the places where an application could request advertising."
       />
 
-      <div className="placements-table-container">
-        <table className="placements-table">
+      <div className="table-card">
+        <table className="data-table">
           <thead>
             <tr>
               <th>ID</th>
@@ -43,48 +27,51 @@ export function PlacementsPage() {
               <th>Provider</th>
               <th>Format</th>
               <th>Status</th>
-              <th style={{ textAlign: 'right' }}>Actions</th>
+              <th style={{ textAlign: "right" }}>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {mockPlacements.map((placement) => (
+            {placements.map((placement) => (
               <tr key={placement.id}>
-                <td className="placement-id">{placement.id}</td>
-                <td style={{ fontWeight: 500 }}>{placement.name}</td>
-                <td>{placement.provider}</td>
+                <td>
+                  <code className="code-badge">{placement.id}</code>
+                </td>
+                <td style={{ fontWeight: 600 }}>{placement.name}</td>
+                <td>{PROVIDER_NAMES[placement.providerId] || placement.providerId}</td>
                 <td>{placement.format}</td>
                 <td>
-                  <span className={`badge ${placement.status === 'Active' ? 'connected' : 'disconnected'}`}>
-                    {placement.status}
+                  <span className={`badge ${placement.status === "Paused" ? "paused" : "connected"}`}>
+                    {placement.status || "Active"}
                   </span>
                 </td>
-                <td style={{ textAlign: 'right' }}>
-                  <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
+                <td>
+                  <div style={{ display: "flex", gap: "0.5rem", justifyContent: "flex-end" }}>
                     <button
-                      type="button"
-                      className="btn-secondary"
-                      onClick={() => handleLoadAd(placement.id)}
-                      disabled={placement.status === 'Paused'}
+                      className="btn-primary"
                       style={{
-                        padding: '0.25rem 0.5rem',
-                        fontSize: '0.8rem',
-                        cursor: placement.status === 'Paused' ? 'not-allowed' : 'pointer',
-                        opacity: placement.status === 'Paused' ? 0.5 : 1
+                        padding: "0.4rem 0.85rem",
+                        fontSize: "0.85rem",
+                        borderRadius: "6px",
+                        cursor: placement.status === "Paused" ? "not-allowed" : "pointer",
+                        opacity: placement.status === "Paused" ? 0.5 : 1,
                       }}
+                      disabled={placement.status === "Paused"}
+                      onClick={() => loadAd(placement.id)}
                     >
                       Load Ad
                     </button>
                     <button
-                      type="button"
                       className="btn-primary"
-                      onClick={() => handleShowAd(placement.id)}
-                      disabled={placement.status === 'Paused'}
                       style={{
-                        padding: '0.25rem 0.5rem',
-                        fontSize: '0.8rem',
-                        cursor: placement.status === 'Paused' ? 'not-allowed' : 'pointer',
-                        opacity: placement.status === 'Paused' ? 0.5 : 1
+                        padding: "0.4rem 0.85rem",
+                        fontSize: "0.85rem",
+                        borderRadius: "6px",
+                        background: "#10b981",
+                        cursor: placement.status === "Paused" ? "not-allowed" : "pointer",
+                        opacity: placement.status === "Paused" ? 0.5 : 1,
                       }}
+                      disabled={placement.status === "Paused"}
+                      onClick={() => showAd(placement.id)}
                     >
                       Show Ad
                     </button>
